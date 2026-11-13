@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="EcoVision AI: clasificador educativo de residuos.">
+  <title>EcoVision AI | Clasificación inteligente</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="libs/tf.min.js"></script>
+  <script src="libs/teachablemachine-image.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">♻</span><span>EcoVision <b>AI</b><small>CLASIFICACIÓN INTELIGENTE</small></span></a>
+    <span class="mode-pill" id="modePill">CARGANDO MODELO…</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">TECNOLOGÍA PARA UN PLANETA MEJOR</p>
+        <h1> cada residuo<br><span>en su lugar.</span></h1>
+        <p class="intro">Muestra un residuo a la cámara o carga una fotografía. EcoVision te ayudará a identificar su material y a encontrar el recipiente adecuado.</p>
+        <div class="hero-tags"><span>● 4 categorías</span><span>● Cámara en vivo</span><span>● Procesamiento local en tu navegador</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="leaf">♻</div><span class="float f1">♧</span><span class="float f2">✳</span><span class="float f3">●</span>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="section-heading"><div><p class="eyebrow">PASO 1</p><h2>Analiza tu residuo</h2></div><span class="privacy">🔒 Tu imagen no se guarda</span></div>
+      <div class="work-grid">
+        <section class="panel camera-panel">
+          <div class="panel-title"><h3>Vista de cámara</h3><span class="live-dot" id="cameraStatus">Cámara apagada</span></div>
+          <div class="camera-stage" id="cameraStage">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="captureCanvas" hidden></canvas>
+            <img id="preview" alt="Vista previa del residuo" hidden>
+            <div class="camera-placeholder" id="cameraPlaceholder"><div class="camera-icon">⌁</div><b>Tu residuo aparecerá aquí</b><span>Activa la cámara o selecciona una fotografía</span></div>
+            <div class="scan-line" id="scanLine"></div>
+          </div>
+          <div class="camera-actions">
+            <button class="btn btn-primary" id="cameraBtn">▶ Activar cámara</button>
+            <label class="btn btn-light" for="fileInput">↑ Cargar imagen</label>
+            <input id="fileInput" type="file" accept="image/*" hidden>
+            <button class="btn btn-light" id="captureBtn" disabled>◎ Capturar</button>
+          </div>
+          <p class="microcopy">La cámara requiere permiso del navegador. Para mejores resultados, muestra un solo objeto con buena iluminación.</p>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-title"><h3>Resultado del análisis</h3><span class="step-number">02</span></div>
+          <div class="empty-result" id="emptyResult"><div class="empty-icon">✧</div><b>Esperando un residuo</b><span>Cuando analices una imagen, aquí aparecerá la categoría y su recomendación.</span></div>
+          <div id="resultContent" hidden>
+            <div class="result-category"><span class="result-symbol" id="resultSymbol">♻</span><div><span class="micro-label">CATEGORÍA IDENTIFICADA</span><h2 id="resultName">Plástico</h2></div></div>
+            <div class="confidence-row"><span id="confidenceLabel">Confianza del modelo</span><b id="confidenceValue">—</b></div>
+            <div class="meter"><div id="confidenceMeter"></div></div><div class="probs" id="probList"></div>
+            <div class="recommendation"><b id="recommendationTitle">Destino recomendado</b><p id="recommendationText"></p></div>
+            <div class="result-actions"><button class="btn btn-primary" id="showBinBtn">Ver recipiente</button><button class="btn btn-light" id="resetBtn">Analizar otro</button></div>
+          </div>
+          <div class="demo-note" id="demoNote" hidden><b>Simulación:</b> este resultado lo eligió el usuario, no es una predicción de IA.</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="bins-section" id="binsSection">
+      <div class="section-heading"><div><p class="eyebrow">PASO 2</p><h2>Estación de clasificación</h2><p class="subheading">El recipiente correspondiente se iluminará cuando se obtenga un resultado.</p></div><span class="legend"><i></i> Destino seleccionado</span></div>
+      <div class="bins-grid" id="binsGrid">
+        <article class="bin-card" data-bin="plastico"><div class="bin-icon blue">▤</div><div class="bin-visual blue-bin"><div class="bin-lid"></div><div class="bin-body"><span>♻</span></div></div><h3>Plástico</h3><p>Botellas y envases plásticos aprovechables.</p><small>RECIPIENTE BLANCO</small></article>
+        <article class="bin-card" data-bin="papel"><div class="bin-icon amber">▤</div><div class="bin-visual amber-bin"><div class="bin-lid"></div><div class="bin-body"><span>▤</span></div></div><h3>Cartón o papel</h3><p>Hojas, cajas y cartón limpios y secos.</p><small>RECIPIENTE BLANCO</small></article>
+        <article class="bin-card" data-bin="vidrio"><div class="bin-icon teal">◇</div><div class="bin-visual teal-bin"><div class="bin-lid"></div><div class="bin-body"><span>◇</span></div></div><h3>Vidrio</h3><p>Frascos y botellas de vidrio aprovechables.</p><small>RECIPIENTE BLANCO</small></article>
+        <article class="bin-card" data-bin="no_reciclable"><div class="bin-icon dark">×</div><div class="bin-visual dark-bin"><div class="bin-lid"></div><div class="bin-body"><span>×</span></div></div><h3>No reciclable</h3><p>Residuos que no pueden aprovecharse.</p><small>RECIPIENTE NEGRO</small></article>
+      </div>
+      <div class="colombia-note"><span>🇨🇴</span><p><b>Separación en Colombia:</b> según el código nacional de colores, plástico, papel, cartón, vidrio y metales aprovechables, limpios y secos van al recipiente blanco. Los no aprovechables van al negro. EcoVision separa visualmente cuatro categorías con fines educativos.</p></div>
+    </section>
+
+    <section class="demo-section" id="demoSection">
+      <div class="demo-heading"><div><p class="eyebrow">PRUEBA INTERACTIVA</p><h2>Simulación sin modelo</h2><p class="subheading">Plan B si no hay cámara: comprueba cómo responde la interfaz sin usar el modelo.</p></div><span class="demo-label">SIMULACIÓN</span></div>
+      <div class="demo-controls">
+        <label for="demoSelect">Selecciona una categoría para simular:</label>
+        <div class="demo-row"><select id="demoSelect"><option value="plastico">Plástico</option><option value="papel">Cartón o papel</option><option value="vidrio">Vidrio</option><option value="no_reciclable">No reciclable</option></select><button class="btn btn-primary" id="demoBtn">Probar clasificación</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="brand"><span class="brand-mark">♻</span><span>EcoVision <b>AI</b><small>APRENDER A SEPARAR TAMBIÉN ES CUIDAR.</small></span></div><p>Proyecto educativo · MVP</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
