@@ -12,6 +12,12 @@ GitHub Pages: https://oscartdev.github.io/EcoVisionAI/
 
 > La cámara requiere HTTPS (GitHub Pages lo cumple) y el permiso del navegador.
 
+## Presentación del proyecto
+
+`presentacion.html` contiene la presentación completa (20 diapositivas) en un solo archivo.
+Se abre desde el botón **«Diapositivas»** del MVP, o directamente en
+<https://oscartdev.github.io/EcoVisionAI/presentacion.html>.
+
 ## Ejecutar en local
 
 La cámara y el modelo **no** funcionan con doble clic en `index.html` (por `file://`). Usa un servidor local:
@@ -26,6 +32,7 @@ Permite el acceso a la cámara cuando el navegador lo pida.
 | Ruta | Descripción |
 | --- | --- |
 | `index.html`, `styles.css`, `app.js` | Interfaz y lógica |
+| `presentacion.html` | Presentación del proyecto (20 diapositivas, archivo único) |
 | `modelo/` | `model.json`, `metadata.json`, `weights.bin` (exportados de Teachable Machine) |
 | `libs/` | TensorFlow.js 1.7.4 y Teachable Machine Image 0.8.5 (locales, no dependen de internet) |
 

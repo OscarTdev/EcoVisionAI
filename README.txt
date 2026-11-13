@@ -16,6 +16,7 @@ Subir el contenido de esta carpeta a un repositorio y activar Settings > Pages >
 
 ## Estructura
 index.html, styles.css, app.js — interfaz y lógica
+presentacion.html — presentación del proyecto (20 diapositivas, archivo único; se abre con el botón «Diapositivas» del MVP)
 modelo/ — model.json, metadata.json, weights.bin (exportados de Teachable Machine)
 libs/ — TensorFlow.js 1.7.4 y Teachable Machine Image 0.8.5 (locales, no dependen de internet)
 
