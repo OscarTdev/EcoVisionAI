@@ -1,4 +1,4 @@
-# EcoVision AI — MVP
+﻿# EcoVision AI — MVP
 
 Aplicación web educativa que clasifica residuos con la cámara (o una foto) en 4 categorías
 y muestra el recipiente de destino. El modelo se entrenó en Google Teachable Machine y se
@@ -16,7 +16,7 @@ Subir el contenido de esta carpeta a un repositorio y activar Settings > Pages >
 
 ## Estructura
 index.html, styles.css, app.js — interfaz y lógica
-presentacion.html — presentación del proyecto (20 diapositivas, archivo único; se abre con el botón «Diapositivas» del MVP)
+presentacion.html — presentación del proyecto (19 diapositivas, archivo único; se abre con el botón «Diapositivas» del MVP)
 modelo/ — model.json, metadata.json, weights.bin (exportados de Teachable Machine)
 libs/ — TensorFlow.js 1.7.4 y Teachable Machine Image 0.8.5 (locales, no dependen de internet)
 
